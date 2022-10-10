@@ -11,7 +11,7 @@ namespace Server
     public interface DataServerInterface
     {
         [OperationContract]
-        List<Clients> GetClientsRegistered();
+        void downloadJobs();
 
         [OperationContract]
         bool FinishingJob(Jobs job);

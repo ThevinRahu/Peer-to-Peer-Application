@@ -41,15 +41,9 @@ namespace Server
 
         }
 
-        public List<Clients> GetClientsRegistered()
+        public void downloadJobs()
         {
 
-            RestClient restClient = new RestClient("http://localhost:9987/");
-            RestRequest restRequest = new RestRequest("api/clients/", Method.Get);
-            RestResponse restResponse = restClient.Execute(restRequest);
-
-            List<Clients> clients = JsonConvert.DeserializeObject<List<Clients>>(restResponse.Content);
-            return clients;
         }
     }
 }
