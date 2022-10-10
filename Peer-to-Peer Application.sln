@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{9C8E0ED6-4824-4891-A425-311A4C72F563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGUI", "ClientGUI\ClientGUI.csproj", "{28757B6A-A07E-403C-9590-4CB2457C2A00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{6152CB85-10A6-4703-B976-FDD572D87F90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C8E0ED6-4824-4891-A425-311A4C72F563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8E0ED6-4824-4891-A425-311A4C72F563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8E0ED6-4824-4891-A425-311A4C72F563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8E0ED6-4824-4891-A425-311A4C72F563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28757B6A-A07E-403C-9590-4CB2457C2A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28757B6A-A07E-403C-9590-4CB2457C2A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28757B6A-A07E-403C-9590-4CB2457C2A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28757B6A-A07E-403C-9590-4CB2457C2A00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6152CB85-10A6-4703-B976-FDD572D87F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6152CB85-10A6-4703-B976-FDD572D87F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6152CB85-10A6-4703-B976-FDD572D87F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6152CB85-10A6-4703-B976-FDD572D87F90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {015ED3B3-D282-45FD-B769-EEA28207945F}
+	EndGlobalSection
+EndGlobal
