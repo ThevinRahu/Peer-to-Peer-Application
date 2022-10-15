@@ -11,9 +11,12 @@ namespace Server
     public interface DataServerInterface
     {
         [OperationContract]
-        void downloadJobs();
+        Jobs downloadJobs(int id);
 
         [OperationContract]
-        bool FinishingJob(Jobs job);
+        List<Jobs> connectServer(int id);
+
+        [OperationContract]
+        bool FinishingJob(int id, JobPool jp);
     }
 }

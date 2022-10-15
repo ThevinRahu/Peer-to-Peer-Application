@@ -13,10 +13,10 @@ namespace WebAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class clientsEntities3 : DbContext
+    public partial class clientsEntities4 : DbContext
     {
-        public clientsEntities3()
-            : base("name=clientsEntities3")
+        public clientsEntities4()
+            : base("name=clientsEntities4")
         {
         }
     
@@ -25,6 +25,6 @@ namespace WebAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<JobPool> JobPools { get; set; }
     }
 }

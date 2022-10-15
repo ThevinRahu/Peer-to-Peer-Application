@@ -9,41 +9,42 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, UseSynchronizationContext = false)]
     internal class DataServer : DataServerInterface
     {
-        public bool FinishingJob(Jobs job)
+        public bool FinishingJob(int id,JobPool jp)
         {
 
-            RestClient restClient = new RestClient("http://localhost:9987/");
-            RestRequest restRequest = new RestRequest("api/clients/", Method.Get);
-            RestResponse restResponse = restClient.Execute(restRequest);
-
-            List<Clients> clients = JsonConvert.DeserializeObject<List<Clients>>(restResponse.Content);
-            if (clients == null)
-            {
-                job.Id = 1;
-            }
-            if (clients.Count > 0)
-            {
-                job.Id = clients[clients.Count - 1].Id + 1;
-            }
-            else
-            {
-                job.Id = 1;
-            }
-
             RestClient restClient1 = new RestClient("http://localhost:9987/");
-            RestRequest restRequest1 = new RestRequest("api/jobs", Method.Post).AddJsonBody(JsonConvert.SerializeObject(job));
+            RestRequest restRequest1 = new RestRequest("api/jobpools/{id}", Method.Put);
+            restRequest1.AddUrlSegment("id", id);
+            restRequest1.AddJsonBody(JsonConvert.SerializeObject(jp));
             RestResponse restResponse1 = restClient1.Execute(restRequest1);
 
             return true;
 
         }
 
-        public void downloadJobs()
+        public Jobs downloadJobs(int id)
         {
+            Jobs job = new Jobs();
+            RestClient restClient = new RestClient("http://localhost:9987/");
+            RestRequest restRequest = new RestRequest("api/jobs/{id}", Method.Get);
+            restRequest.AddUrlSegment("id", id);
+            RestResponse restResponse = restClient.Execute(restRequest);
+            Jobs jobs = JsonConvert.DeserializeObject<Jobs>(restResponse.Content);
+            return jobs;
+        }
 
+        public List<Jobs> connectServer(int id)
+        {
+            Jobs job = new Jobs();
+            RestClient restClient = new RestClient("http://localhost:9987/");
+            RestRequest restRequest = new RestRequest("api/getjobs/{id}", Method.Get);
+            restRequest.AddUrlSegment("id", id);
+            RestResponse restResponse = restClient.Execute(restRequest);
+            List<Jobs> jobs = JsonConvert.DeserializeObject<List<Jobs>>(restResponse.Content);
+            return jobs;
         }
     }
 }

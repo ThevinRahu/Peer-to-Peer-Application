@@ -12,44 +12,44 @@ using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
-    public class JobsController : ApiController
+    public class JobPoolsController : ApiController
     {
-        private clientsEntities3 db = new clientsEntities3();
+        private clientsEntities4 db = new clientsEntities4();
 
-        // GET: api/Jobs
-        public IQueryable<Job> GetJobs()
+        // GET: api/JobPools
+        public IQueryable<JobPool> GetJobPools()
         {
-            return db.Jobs;
+            return db.JobPools;
         }
 
-        // GET: api/Jobs/5
-        [ResponseType(typeof(Job))]
-        public IHttpActionResult GetJob(int id)
+        // GET: api/JobPools/5
+        [ResponseType(typeof(JobPool))]
+        public IHttpActionResult GetJobPool(int id)
         {
-            Job job = db.Jobs.Find(id);
-            if (job == null)
+            JobPool jobPool = db.JobPools.Find(id);
+            if (jobPool == null)
             {
                 return NotFound();
             }
 
-            return Ok(job);
+            return Ok(jobPool);
         }
 
-        // PUT: api/Jobs/5
+        // PUT: api/JobPools/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutJob(int id, Job job)
+        public IHttpActionResult PutJobPool(int id, JobPool jobPool)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != job.Id)
+            if (id != jobPool.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(job).State = EntityState.Modified;
+            db.Entry(jobPool).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JobExists(id))
+                if (!JobPoolExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace WebAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Jobs
-        [ResponseType(typeof(Job))]
-        public IHttpActionResult PostJob(Job job)
+        // POST: api/JobPools
+        [ResponseType(typeof(JobPool))]
+        public IHttpActionResult PostJobPool(JobPool jobPool)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Jobs.Add(job);
+            db.JobPools.Add(jobPool);
 
             try
             {
@@ -87,7 +87,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (JobExists(job.Id))
+                if (JobPoolExists(jobPool.Id))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace WebAPI.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = job.Id }, job);
+            return CreatedAtRoute("DefaultApi", new { id = jobPool.Id }, jobPool);
         }
 
-        // DELETE: api/Jobs/5
-        [ResponseType(typeof(Job))]
-        public IHttpActionResult DeleteJob(int id)
+        // DELETE: api/JobPools/5
+        [ResponseType(typeof(JobPool))]
+        public IHttpActionResult DeleteJobPool(int id)
         {
-            Job job = db.Jobs.Find(id);
-            if (job == null)
+            JobPool jobPool = db.JobPools.Find(id);
+            if (jobPool == null)
             {
                 return NotFound();
             }
 
-            db.Jobs.Remove(job);
+            db.JobPools.Remove(jobPool);
             db.SaveChanges();
 
-            return Ok(job);
+            return Ok(jobPool);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool JobExists(int id)
+        private bool JobPoolExists(int id)
         {
-            return db.Jobs.Count(e => e.Id == id) > 0;
+            return db.JobPools.Count(e => e.Id == id) > 0;
         }
     }
 }
