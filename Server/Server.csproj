@@ -81,6 +81,7 @@
     <Compile Include="DataServer.cs" />
     <Compile Include="DataServerInterface.cs" />
     <Compile Include="Clients.cs" />
+    <Compile Include="JobPool.cs" />
     <Compile Include="Jobs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

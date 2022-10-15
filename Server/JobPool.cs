@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    public class Jobs
+    public class JobPool
     {
         public int Id { get; set; }
-        public int client_job_id { get; set; }
-        public string description { get; set; }
-        public string name { get; set; }
+        public int job_id { get; set; }
+        public Nullable<int> finished { get; set; }
+        public string solution { get; set; }
     }
 }

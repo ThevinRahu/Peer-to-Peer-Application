@@ -164,7 +164,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\GetJobsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobPoolsController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,6 +192,24 @@
     </Compile>
     <Compile Include="Models\Job.cs">
       <DependentUpon>Jobs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobPool.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobPool.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobPool.cs">
+      <DependentUpon>JobPool.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobPool.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobPool.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobPool1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobPool.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Jobs.Context.cs">
       <AutoGen>True</AutoGen>
@@ -230,6 +250,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Clients.edmx</DependentUpon>
       <LastGenOutput>Clients.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\JobPool.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JobPool.edmx</DependentUpon>
+      <LastGenOutput>JobPool.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\JobPool.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JobPool.edmx</DependentUpon>
+      <LastGenOutput>JobPool1.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Jobs.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -275,6 +305,13 @@
     </EntityDeploy>
     <Content Include="Models\Jobs.edmx.diagram">
       <DependentUpon>Jobs.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\JobPool.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>JobPool.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\JobPool.edmx.diagram">
+      <DependentUpon>JobPool.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
