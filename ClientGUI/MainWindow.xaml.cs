@@ -121,7 +121,7 @@ namespace ClientGUI
             RestResponse restResponse1 = restClient1.Execute(restRequest1);
         }
 
-        private async void ConnectServer_ClickAsync(object sender, RoutedEventArgs e)
+        private async void ConnectServer_Click(object sender, RoutedEventArgs e)
         {
             Task<List<Jobs>> task = new Task<List<Jobs>>(updateGUIJobs);
 
