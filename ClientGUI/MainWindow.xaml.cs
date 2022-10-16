@@ -114,8 +114,9 @@ namespace ClientGUI
             }
 
 
-            job.client_job_id = 1;
+            job.client_job_id = 1; //registered client
             job.description = "def func(var1, var2): return var1+var2";
+            job.name = "name";
             RestClient restClient1 = new RestClient("http://localhost:9987/");
             RestRequest restRequest1 = new RestRequest("api/jobs/", Method.Post).AddJsonBody(JsonConvert.SerializeObject(job));
             RestResponse restResponse1 = restClient1.Execute(restRequest1);
@@ -152,7 +153,7 @@ namespace ClientGUI
             Result.Text = result.ToString();
             result = result.ToString();
             JobPool jobPool = new JobPool();
-            jobPool.job_id = 1;
+            jobPool.job_id = 1; //job id
             jobPool.finished = 0;
             RestClient restClient = new RestClient("http://localhost:9987/");
             RestRequest restRequest = new RestRequest("api/jobpools/", Method.Get);
@@ -194,7 +195,7 @@ namespace ClientGUI
             URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
-            List<Jobs> jobs = foob.connectServer(1);
+            List<Jobs> jobs = foob.connectServer(1); //server id/client_job_id
             return jobs;
         }
 
