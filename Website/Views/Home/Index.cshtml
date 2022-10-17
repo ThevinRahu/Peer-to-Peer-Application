@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1></br>
+    <h2 class="display-4">Check whos connected</h2>
+    <table class="table table-dark table-striped-columns" id="dataT"> 
+    <thead>
+    <th>Connected Clients</th>
+    <th>Clients Finished Jobs</th>
+    </thead>
+    <tbody>
+    <td>@Model.countConnected</td>
+    <td>@Model.countFinished</td>
+    </tbody>
+    </table>
+    
+</div>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+function AutoRefresh( t ) {
+               setTimeout("location.reload(true);", t);
+            }
+/*
+window.setInterval("loadPartialView()", 60000);
+
+function loadPartialView() {
+    $.ajax({
+        type: 'get',
+        url: '/Load/Reload/',
+        contentType: 'application/json',
+        processData: false,
+        success: function(data, textStatus, jQxhr) {
+            console.log(data);
+            
+            $('#dataT').html("");
+            $('#dataT').append(" <thead><th>Connected Clients</th><th>Clients Finished Jobs</th></thead> <tbody><td>"+data.countConnected+"</td><td>"+data.countFinished+"</td></tbody>");
+           
+        },
+        error: function(jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+            //alert("No results matched!");
+        }
+    });
+}
+*/
+</script>
