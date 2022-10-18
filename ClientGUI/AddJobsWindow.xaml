@@ -1,0 +1,17 @@
+﻿<Window x:Class="ClientGUI.AddJobsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientGUI"
+        mc:Ignorable="d"
+        Title="AddJobsWindow" Height="286" Width="377">
+    <Grid Background="#FFDDD805">
+        <TextBlock HorizontalAlignment="Left" Margin="73,30,0,0" TextWrapping="Wrap" Text="Add Job" VerticalAlignment="Top" FontSize="30" Width="208" FontWeight="Bold" TextAlignment="Center"/>
+        <Label Content="Enter Description :" HorizontalAlignment="Left" Margin="58,93,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <TextBox x:Name="desBox" HorizontalAlignment="Left" Margin="63,117,0,0" VerticalAlignment="Top" Width="248" Height="24" FontSize="14"/>
+        <Label Content="Enter Name :" HorizontalAlignment="Left" Margin="58,144,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="121" FontSize="14"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Width="248" Height="24" FontSize="14"/>
+        <Button x:Name="loginbutton" Content="Add Job" HorizontalAlignment="Left" Margin="64,212,0,0" VerticalAlignment="Top" Width="100" Click="AddJob_Click" Background="#FF00FF35" BorderBrush="Black"/>
+    </Grid>
+</Window>
