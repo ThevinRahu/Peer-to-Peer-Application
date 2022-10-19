@@ -13,12 +13,22 @@
         <!--<ListBox x:Name="Jobs" HorizontalAlignment="Left" Height="99" Margin="46,195,0,0" VerticalAlignment="Top" Width="193" d:ItemsSource="{d:SampleData ItemCount=5}"/>-->
         <!--<Button x:Name="SelectJob" Content="Select Job" HorizontalAlignment="Left" Margin="125,317,0,0" VerticalAlignment="Top" Click="SelectJob_Click"/>-->
         <!--<Button x:Name="Finish" Content="Completed" HorizontalAlignment="Left" Margin="559,374,0,0" VerticalAlignment="Top" Click="Finish_Click" Height="25" Width="64"/>-->
-        <DataGrid AutoGenerateColumns="False" x:Name="servers" HorizontalAlignment="Center" Height="148" Margin="0,78,0,0" VerticalAlignment="Top" Width="688" PreviewMouseDoubleClick="clientPreview" >
+        <DataGrid AutoGenerateColumns="False" x:Name="servers" HorizontalAlignment="Center" Height="148" Margin="0,78,0,0" VerticalAlignment="Top" Width="772" PreviewMouseDoubleClick="clientPreview" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" IsReadOnly="True" Binding="{Binding name}" Width="150"></DataGridTextColumn>
                 <DataGridTextColumn Header="IP Address" IsReadOnly="True" Binding="{Binding ip_address}" Width="250"></DataGridTextColumn>
                 <DataGridTextColumn Header="Port" IsReadOnly="True" Binding="{Binding port}" Width="100"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Progress" 
+                                        Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ProgressBar 
+                                Value="{Binding Progress}"
+                                Minimum="0" Maximum="100" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Action" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
@@ -35,6 +45,7 @@
                 <DataGridTextColumn Header="ID" Visibility="Collapsed" IsReadOnly="True" Binding="{Binding description}" Width="50"/>
                 <DataGridTextColumn Header="Description" IsReadOnly="True" Binding="{Binding description}" Width="450"/>
                 <DataGridTextColumn Header="Name" IsReadOnly="True" Binding="{Binding name}" Width="100"/>
+                
                 <DataGridTemplateColumn Header="Action" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
