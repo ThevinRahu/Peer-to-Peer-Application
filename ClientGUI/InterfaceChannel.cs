@@ -13,11 +13,11 @@ namespace ClientGUI
         //Connecting the .net remoting server
 
         private DataServerInterface interfaceChannel;
-        public DataServerInterface generateChannel()
+        public DataServerInterface generateChannel(string URL)
         {
             ChannelFactory<DataServerInterface> channelFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
+            //string URL = "net.tcp://localhost:8100/DataService";
             channelFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             interfaceChannel = channelFactory.CreateChannel();
             return interfaceChannel;
