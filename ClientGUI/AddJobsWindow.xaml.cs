@@ -50,7 +50,19 @@ namespace ClientGUI
             }
 
             job.client_job_id = clientId; //registered client
-            job.description = "def func(var1, var2): return var1+var2";
+
+            var desc = "def func(var1, var2): return var1+var2"; // set user input here
+            if (!String.IsNullOrEmpty(desc))
+            {
+                byte[] data = System.Text.Encoding.UTF8.GetBytes(desc);
+                job.description = Convert.ToBase64String(data);
+            }
+            else
+            {
+                MessageBox.Show("Null Description");
+                job.description = "def func(a,b): return null";
+            }
+            //job.description = "def func(var1, var2): return var1+var2";
             job.name = nameBox.Text;
             RestClient restClient1 = new RestClient("http://localhost:9987/");
             RestRequest restRequest1 = new RestRequest("api/jobs/", Method.Post).AddJsonBody(JsonConvert.SerializeObject(job));

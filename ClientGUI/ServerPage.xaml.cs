@@ -39,6 +39,8 @@ namespace ClientGUI
                 Task<List<Clients>> task = new Task<List<Clients>>(updateGUIClients);
 
                 task.Start();
+            if (task.Wait(TimeSpan.FromSeconds(30)))
+            {
                 List<Clients> clients = await task;
 
                 //display clients
@@ -56,6 +58,11 @@ namespace ClientGUI
                 {
                     MessageBox.Show("No Available Servers!!");
                 }
+            }
+            else
+            {
+                task.Dispose();
+            }
         }
 
         public List<Clients> updateGUIClients()

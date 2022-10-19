@@ -50,6 +50,8 @@ namespace ClientGUI
                 Task<List<Clients>> task = new Task<List<Clients>>(updateGUIClients);
 
                 task.Start();
+            if (task.Wait(TimeSpan.FromSeconds(30)))
+            {
                 List<Clients> clients = await task;
 
                 //display clients
@@ -67,6 +69,11 @@ namespace ClientGUI
                 {
                     MessageBox.Show("No Available Servers!!");
                 }
+            }
+            else
+            {
+                task.Dispose();
+            }
         }
 
         public List<Clients> updateGUIClients()
@@ -84,30 +91,37 @@ namespace ClientGUI
             Task<List<Jobs>> task = new Task<List<Jobs>>(updateGUIJobs);
 
             task.Start();
-            List<Jobs> jobs = await task;
-
-            if (jobs.Count != 0)
+            if (task.Wait(TimeSpan.FromSeconds(30)))
             {
-                List<Jobs> gridData = new List<Jobs>();
-                for (int i = 0; i <= jobs.Count - 1; i++)
+                List<Jobs> jobs = await task;
+
+                if (jobs.Count != 0)
                 {
-                    //Jobs.Items.Add(jobs[i].name + "-" + jobs[i].description);
-                    gridData.Add(jobs[i]);
-                }
+                    List<Jobs> gridData = new List<Jobs>();
+                    for (int i = 0; i <= jobs.Count - 1; i++)
+                    {
+                        //Jobs.Items.Add(jobs[i].name + "-" + jobs[i].description);
+                        gridData.Add(jobs[i]);
+                    }
                     job.ItemsSource =
                     gridData;
+                }
+                else
+                {
+                    MessageBox.Show("No Available Jobs!!");
+                }
             }
             else
             {
-                MessageBox.Show("No Available Jobs!!");
+                task.Dispose();
             }
         }
         public List<Jobs> updateGUIJobs()
         {
             InterfaceChannel iChannel = new InterfaceChannel();
             DataServerInterface iserverChannel;
-            //string URL = "net.tcp://"+Ip+ ":"+ Port +"/DataService";
-            iserverChannel = iChannel.generateChannel();
+            string URL = "net.tcp://"+Ip+ ":"+ 8100 +"/DataService";
+            iserverChannel = iChannel.generateChannel(URL);
             List<Jobs> jobs = iserverChannel.connectServer(clientId); //server id/client_job_id
             return jobs;
         }
@@ -170,14 +184,35 @@ namespace ClientGUI
 
             task.Start();
             Jobs job = await task;
-
-            ScriptEngine engine = Python.CreateEngine();
-            ScriptScope scope = engine.CreateScope();
-            engine.Execute(job.description, scope);
-            dynamic testFunction = scope.GetVariable("func");
-            var result = testFunction(2, 2);
-            Result.Text = result.ToString();
-            result = result.ToString();
+            try
+            {
+                ScriptEngine engine = Python.CreateEngine();
+                ScriptScope scope = engine.CreateScope();
+                var desc = "";
+                if (!String.IsNullOrEmpty(job.description))
+                {
+                     byte[] data = Convert.FromBase64String(job.description);
+                     desc = System.Text.Encoding.UTF8.GetString(data);
+                    //danata wada karanne nathi wei athana encoded nathi nisa encode karala db ekata dala balanna naththa uda deka commen karala yata eka uncomment karanna
+                    //desc = job.description;
+                }
+                else
+                {
+                    MessageBox.Show("Null Description");
+                    desc = "def func(): return null";
+                }
+                engine.Execute(desc, scope);
+                dynamic testFunction = scope.GetVariable("func");
+                var result = testFunction(4, 4);
+                Result.Text = result.ToString();
+                result = result.ToString();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error");
+                SelectJob_Click();
+            }
+            
             JobPool jobPool = new JobPool();
             jobPool.job_id = clientJobId; //job id
             jobPool.finished = 0;
@@ -207,8 +242,8 @@ namespace ClientGUI
         {
             InterfaceChannel iChannel = new InterfaceChannel();
             DataServerInterface iserverChannel;
-            //string URL = "net.tcp://" + Ip + ":" + Port + "/DataService";
-            iserverChannel = iChannel.generateChannel();
+            string URL = "net.tcp://" + Ip + ":" + 8100 + "/DataService";
+            iserverChannel = iChannel.generateChannel(URL);
             Jobs jobs = iserverChannel.downloadJobs(clientId);
             return jobs;
         }
@@ -227,8 +262,8 @@ namespace ClientGUI
         {
             InterfaceChannel iChannel = new InterfaceChannel();
             DataServerInterface iserverChannel;
-            //string URL = "net.tcp://" + Ip + ":" + Port + "/DataService";
-            iserverChannel = iChannel.generateChannel();
+            string URL = "net.tcp://" + Ip + ":" + 8100 + "/DataService";
+            iserverChannel = iChannel.generateChannel(URL);
             JobPool jp = new JobPool();
             string srch = "";
             jp.Id = jobPoolId;
