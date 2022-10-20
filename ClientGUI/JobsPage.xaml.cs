@@ -195,7 +195,7 @@ namespace ClientGUI
             Jobs selected = job.SelectedItem as Jobs;
             if (selected != null)
             {
-                if (selected.client_job_id == 0)
+                if (selected.Id == 0)
                 {
                     MessageBox.Show("Selected Feild is Empty", Title = "Empty Feild Selected");
                 }
@@ -204,7 +204,7 @@ namespace ClientGUI
                     for (vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                         if (vis is DataGridRow) //Find current DataGridRow
                         {
-                            clientJobId = selected.client_job_id;
+                            clientJobId = selected.Id;
                             ProgressChanged2();
                             SelectJob_Click();
                             break;
