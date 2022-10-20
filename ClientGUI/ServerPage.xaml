@@ -11,7 +11,7 @@
     <Grid>
         <Label Content="Servers" HorizontalAlignment="Center" Margin="0,29,0,0" VerticalAlignment="Top" FontSize="36"/>
         <Button x:Name="Register" Content="Register" HorizontalAlignment="Center" Margin="0,337,0,0" VerticalAlignment="Top" Background="#FF00FF35" Click="Register_Click" Height="32" Width="72"/>
-        <DataGrid AutoGenerateColumns="False" x:Name="servers" HorizontalAlignment="Left" Height="178" Margin="68,112,0,0" VerticalAlignment="Top" Width="674" PreviewMouseDoubleClick="clientPreview" >
+        <DataGrid AutoGenerateColumns="False" x:Name="servers" HorizontalAlignment="Left" Height="178" Margin="68,112,0,0" VerticalAlignment="Top" Width="674" PreviewMouseDoubleClick="clientPreview" CanUserAddRows="false">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" IsReadOnly="True" Binding="{Binding name}" Width="150"></DataGridTextColumn>
@@ -20,7 +20,7 @@
                 <DataGridTemplateColumn Header="Action" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <Button Background="#FF00FF35" Click="clientPreview">Select</Button>
+                            <Button Background="#FF00F7FF" Click="clientPreview">Connect</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

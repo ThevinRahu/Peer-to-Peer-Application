@@ -36,6 +36,8 @@ namespace ClientGUI
 
         public async void updateGUIClientsAsync()
         {
+            while (true)
+            {
                 Task<List<Clients>> task = new Task<List<Clients>>(updateGUIClients);
 
                 task.Start();
@@ -50,6 +52,11 @@ namespace ClientGUI
                     List<Clients> gridData = new List<Clients>();
                     for (int i = 0; i <= clients.Count - 1; i++)
                     {
+                        if (!String.IsNullOrEmpty(clients[i].ip_address))
+                        {
+                            byte[] data = Convert.FromBase64String(clients[i].ip_address);
+                            clients[i].ip_address = System.Text.Encoding.UTF8.GetString(data);
+                        }
                         gridData.Add(clients[i]);
                     }
                     servers.ItemsSource = gridData;
@@ -62,6 +69,8 @@ namespace ClientGUI
             else
             {
                 task.Dispose();
+            }
+                await Task.Delay(TimeSpan.FromSeconds(10));
             }
         }
 
