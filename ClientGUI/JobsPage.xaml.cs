@@ -59,7 +59,7 @@ namespace ClientGUI
                 if (clients.Count != 0)
                 {
                     List<Clients> gridData = new List<Clients>();
-                    for (int i = 0; i <= clients.Count - 1; i++)
+                    for (int i = 0; i <= clients.Count - 2; i++)
                     {
                         gridData.Add(clients[i]);
                     }

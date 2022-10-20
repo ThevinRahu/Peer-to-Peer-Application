@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,7 @@ namespace ClientGUI
             }
 
             client.name = nameBox.Text;
-            client.ip_address = ipBox.Text;
+            client.ip_address = Encode(ipBox.Text);
             client.port = (int)Int64.Parse(portBox.Text);
             if (client.name.Length == 0 || client.ip_address.Length == 0 || client.port == 0)
             {
@@ -66,6 +67,15 @@ namespace ClientGUI
                 JobsPage jbPage = new JobsPage(client.Id,client.name);
                 this.NavigationService.Navigate(jbPage);
             }
+        }
+
+        public string Encode(string St)
+        {
+            if (String.IsNullOrEmpty(St)){
+                return St;
+            }
+            byte[] Stbytes = Encoding.UTF8.GetBytes(St);
+            return Convert.ToBase64String(Stbytes);
         }
 
         private void AddJob_Click(object sender, RoutedEventArgs e)
