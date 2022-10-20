@@ -289,7 +289,7 @@ namespace ClientGUI
             DataServerInterface iserverChannel;
             string URL = "net.tcp://" + Ip + ":" + 8100 + "/DataService";
             iserverChannel = iChannel.generateChannel(URL);
-            Jobs jobs = iserverChannel.downloadJobs(clientId);
+            Jobs jobs = iserverChannel.downloadJobs(clientJobId);
             return jobs;
         }
 
