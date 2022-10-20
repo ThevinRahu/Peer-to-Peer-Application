@@ -5,7 +5,10 @@ using RestSharp;
 using Server;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Security.Policy;
 using System.ServiceModel;
 using System.Text;
@@ -20,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 using static IronPython.Modules._ast;
 
@@ -35,6 +39,7 @@ namespace ClientGUI
         int jobPoolId = 0;
         string Ip = "";
         int Port = 0;
+
         public JobsPage(int id, string name)
         {
             InitializeComponent();
@@ -47,32 +52,40 @@ namespace ClientGUI
 
         public async void updateGUIClientsAsync()
         {
+            while (true)
+            {
                 Task<List<Clients>> task = new Task<List<Clients>>(updateGUIClients);
 
                 task.Start();
-            if (task.Wait(TimeSpan.FromSeconds(30)))
-            {
-                List<Clients> clients = await task;
-
-                //display clients
-                Clients clis;
-                if (clients.Count != 0)
+                if (task.Wait(TimeSpan.FromSeconds(30)))
                 {
-                    List<Clients> gridData = new List<Clients>();
-                    for (int i = 0; i <= clients.Count - 2; i++)
+                    List<Clients> clients = await task;
+
+                    //display clients
+                    if (clients.Count != 0)
                     {
-                        gridData.Add(clients[i]);
+                        List<Clients> gridData = new List<Clients>();
+                        for (int i = 0; i <= clients.Count - 1; i++)
+                        {
+                            if (!String.IsNullOrEmpty(clients[i].ip_address))
+                            {
+                                byte[] data = Convert.FromBase64String(clients[i].ip_address);
+                                clients[i].ip_address = System.Text.Encoding.UTF8.GetString(data);
+                            }
+                            gridData.Add(clients[i]);
+                        }
+                        servers.ItemsSource = gridData;
                     }
-                    servers.ItemsSource = gridData;
+                    else
+                    {
+                        MessageBox.Show("No Available Servers!!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No Available Servers!!");
+                    task.Dispose();
                 }
-            }
-            else
-            {
-                task.Dispose();
+                await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }
 
@@ -88,7 +101,9 @@ namespace ClientGUI
 
         private async void ConnectServer_Click()
         {
-            Task<List<Jobs>> task = new Task<List<Jobs>>(updateGUIJobs);
+            while (true)
+            {
+                Task<List<Jobs>> task = new Task<List<Jobs>>(updateGUIJobs);
 
             task.Start();
             if (task.Wait(TimeSpan.FromSeconds(30)))
@@ -100,11 +115,11 @@ namespace ClientGUI
                     List<Jobs> gridData = new List<Jobs>();
                     for (int i = 0; i <= jobs.Count - 1; i++)
                     {
-                        //Jobs.Items.Add(jobs[i].name + "-" + jobs[i].description);
-                        gridData.Add(jobs[i]);
+                            byte[] data = Convert.FromBase64String(jobs[i].description);
+                            jobs[i].description = System.Text.Encoding.UTF8.GetString(data);
+                            gridData.Add(jobs[i]);
                     }
-                    job.ItemsSource =
-                    gridData;
+                    job.ItemsSource =gridData;
                 }
                 else
                 {
@@ -114,6 +129,8 @@ namespace ClientGUI
             else
             {
                 task.Dispose();
+            }
+                await Task.Delay(TimeSpan.FromSeconds(15));
             }
         }
         public List<Jobs> updateGUIJobs()
@@ -126,6 +143,7 @@ namespace ClientGUI
             return jobs;
         }
 
+        Visual vis;
         private void clientPreview(object sender, RoutedEventArgs e)
         {
             Clients selected = servers.SelectedItem as Clients;
@@ -137,12 +155,19 @@ namespace ClientGUI
                 }
                 else
                 {
-                    clientId = selected.Id;
-                    Ip = selected.ip_address;
-                    Port = (int)selected.port;
-                    userName.Content = "ID : " + selected.Id;
-                    userToken.Content = "Name: " + selected.name;
-                    ConnectServer_Click();
+
+                    for (vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                        if (vis is DataGridRow) //Find current DataGridRow
+                        {
+                            clientId = selected.Id;
+                            Ip = selected.ip_address;
+                            Port = (int)selected.port;
+                            userName.Content = "ID : " + selected.Id;
+                            userToken.Content = "Name: " + selected.name;
+                            ProgressChanged();
+                            ConnectServer_Click();
+                            break;
+                        }
                 }
             }
             else
@@ -151,6 +176,14 @@ namespace ClientGUI
             }
         }
 
+        private void ProgressChanged()
+        {
+            // Update the progressbar percentage only when the value is not the same.
+            for (int i = 0; i <= 100; i++)
+            {
+                ((Clients)(((DataGridRow)vis).Item)).Progress = i;
+            }
+        }
         private void AddJob_Click(object sender, RoutedEventArgs e)
         {
             AddJobsWindow reg = new AddJobsWindow(clientId);
@@ -168,8 +201,14 @@ namespace ClientGUI
                 }
                 else
                 {
-                    clientJobId = selected.client_job_id;
-                    SelectJob_Click();
+                    for (vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                        if (vis is DataGridRow) //Find current DataGridRow
+                        {
+                            clientJobId = selected.client_job_id;
+                            ProgressChanged2();
+                            SelectJob_Click();
+                            break;
+                        }
                 }
             }
             else
@@ -177,7 +216,14 @@ namespace ClientGUI
                 MessageBox.Show("Selected Field is Empty", Title = "Empty Field Selected");
             }
         }
-
+        private void ProgressChanged2()
+        {
+            // Update the progressbar percentage only when the value is not the same.
+            for (int i = 0; i <= 100; i++)
+            {
+                ((Jobs)(((DataGridRow)vis).Item)).Progress = i;
+            }
+        }
         private async void SelectJob_Click()
         {
             Task<Jobs> task = new Task<Jobs>(updateGUIJobSelected);
@@ -193,7 +239,6 @@ namespace ClientGUI
                 {
                      byte[] data = Convert.FromBase64String(job.description);
                      desc = System.Text.Encoding.UTF8.GetString(data);
-                    //danata wada karanne nathi wei athana encoded nathi nisa encode karala db ekata dala balanna naththa uda deka commen karala yata eka uncomment karanna
                     //desc = job.description;
                 }
                 else
@@ -249,12 +294,17 @@ namespace ClientGUI
         }
 
         
-        private async void Finish_Click(object sender, RoutedEventArgs e)
+        private async void Upload_Click(object sender, RoutedEventArgs e)
         {
             Task task = new Task(finishJobSelected);
 
             task.Start();
             await task;
+            for (int i = 1; i < 100; i++)
+            {
+                ProgressBar1.Dispatcher.Invoke(() => ProgressBar1.Value = i, DispatcherPriority.Background);
+                Thread.Sleep(100);
+            }
             MessageBox.Show("Successfully Uploaded!!!", Title = "Success Message");
         }
 

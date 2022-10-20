@@ -118,6 +118,7 @@
       <DependentUpon>AddJobsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clients.cs" />
+    <Compile Include="DataDetail.cs" />
     <Compile Include="InterfaceChannel.cs" />
     <Compile Include="JobsPage.xaml.cs">
       <DependentUpon>JobsPage.xaml</DependentUpon>

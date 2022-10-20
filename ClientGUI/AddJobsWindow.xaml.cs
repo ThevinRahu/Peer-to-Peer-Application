@@ -51,7 +51,7 @@ namespace ClientGUI
 
             job.client_job_id = clientId; //registered client
 
-            var desc = "def func(var1, var2): return var1+var2"; // set user input here
+            var desc = desBox.Text; // set user input here
             if (!String.IsNullOrEmpty(desc))
             {
                 byte[] data = System.Text.Encoding.UTF8.GetBytes(desc);
