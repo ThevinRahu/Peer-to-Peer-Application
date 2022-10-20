@@ -49,15 +49,23 @@ namespace ClientGUI
                 client.Id = 1;
             }
 
-            client.name = nameBox.Text;
-            client.ip_address = Encode(ipBox.Text);
-            client.port = (int)Int64.Parse(portBox.Text);
-            if (client.name.Length == 0 || client.ip_address.Length == 0 || client.port == 0)
+           
+            if (nameBox.Text == "")
             {
-                MessageBox.Show("Name or Password Feilds cannot be empty!!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Name Feilds cannot be empty!!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }else if (ipBox.Text == "")
+            {
+                MessageBox.Show("Ip Address Feilds cannot be empty!!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }else if (portBox.Text == "")
+            {
+                MessageBox.Show("Port Feilds cannot be empty!!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
+                client.name = nameBox.Text;
+                client.ip_address = Encode(ipBox.Text);
+                client.port = (int)Int64.Parse(portBox.Text);
+
                 RestClient restClient1 = new RestClient("http://localhost:9987/");
                 RestRequest restRequest1 = new RestRequest("api/clients/", Method.Post).AddJsonBody(JsonConvert.SerializeObject(client));
                 RestResponse restResponse1 = restClient1.Execute(restRequest1);
